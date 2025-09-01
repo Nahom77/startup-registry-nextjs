@@ -1,3 +1,4 @@
+import StartupCard from '@/components/StartupCard';
 import SearchForm from '../../components/SearchForm';
 
 export default async function Home({
@@ -7,8 +8,23 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
+  const posts = [
+    {
+      _createdAt: new Date(),
+      views: 55,
+      author: { _id: 1, name: 'Adrian' },
+      _id: 1,
+      description: 'This is description',
+      image:
+        'https://images.unsplash.com/photo-1736536475480-8f4e8bafeddd?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      category: 'Robots',
+      title: 'We Robots',
+    },
+  ];
+
   return (
     <>
+      {/* Hero section */}
       <section className='pink_container'>
         <h1 className='heading'>
           Pitch Your Startup, <br /> Connect With Entrepreneurs
@@ -19,6 +35,18 @@ export default async function Home({
         </p>
 
         <SearchForm query={query} />
+      </section>
+
+      <section className='section_container'>
+        <p className='text-30-semibold'>
+          {query ? `Search results for ${query}` : 'All Startups'}
+        </p>
+
+        <ul className='mt-7 card_grid'>
+          {posts?.length > 0
+            ? posts.map(post => <StartupCard key={post?._id} post={post} />)
+            : ''}
+        </ul>
       </section>
     </>
   );
