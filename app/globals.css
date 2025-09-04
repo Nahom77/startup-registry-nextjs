@@ -306,8 +306,8 @@
 
   .startup-card_btn {
     @apply rounded-full font-medium text-[16px] text-white px-5 py-3;
+    background-color: #141413 !important;
     /* !important; */
-    background-color: #141413;
   }
 
   .startup-card_skeleton {

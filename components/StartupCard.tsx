@@ -55,7 +55,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
           className='startup-card_img'
           // layout='fill'
           height={164}
-          width={264}
+          width={164}
         />
       </Link>
 
