@@ -1,5 +1,9 @@
-import StartupCard from '@/components/StartupCard';
+import StartupCard, {StartupCardType} from '@/components/StartupCard';
 import SearchForm from '../../components/SearchForm';
+import { client } from '@/sanity/lib/client';
+import { STARTUPS_QUERY } from '@/sanity/lib/queries';
+
+
 
 export default async function Home({
   searchParams,
@@ -8,19 +12,7 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: 'Adrian' },
-      _id: 1,
-      description: 'This is description',
-      image:
-        'https://images.unsplash.com/photo-1736536475480-8f4e8bafeddd?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      category: 'Robots',
-      title: 'We Robots',
-    },
-  ];
+  const posts = await client.fetch(STARTUPS_QUERY);
 
   return (
     <>
@@ -30,7 +22,7 @@ export default async function Home({
           Pitch Your Startup, <br /> Connect With Entrepreneurs
         </h1>
 
-        <p className='sub-heading !max-w-3xl'>
+        <p className='!max-w-3xl sub-heading'>
           Submit Ideas, and Get Noticed in Virtual Competitions.
         </p>
 
@@ -44,7 +36,7 @@ export default async function Home({
 
         <ul className='mt-7 card_grid'>
           {posts?.length > 0
-            ? posts.map(post => <StartupCard key={post?._id} post={post} />)
+            ? posts.map((post: StartupCardType) => <StartupCard key={post?._id} post={post} />)
             : ''}
         </ul>
       </section>
