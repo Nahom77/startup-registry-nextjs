@@ -13,6 +13,10 @@ export function formatDate(date: string) {
   });
 }
 
+export function parseServerActionResponse<T>(response: T) {
+  return JSON.parse(JSON.stringify(response));
+}
+
 // "predev": "npm run typegen",
 // "prebuild": "npm run typegen",
 // "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"

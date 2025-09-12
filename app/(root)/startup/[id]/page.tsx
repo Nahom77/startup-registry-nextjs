@@ -46,7 +46,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               className="flex items-center gap-2 mb-3"
             >
               <Image
-                src={post.author.image}
+                src={post.author?.image}
                 alt="avatar"
                 width={64}
                 height={64}
@@ -54,14 +54,14 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               />
 
               <div>
-                <p className="text-20-medium">{post.author.name}</p>
+                <p className="text-20-medium">{post.author?.name}</p>
                 <p className="!text-black-300 text16-medium">
-                  @{post.author.username}
+                  @{post.author?.username}
                 </p>
               </div>
             </Link>
 
-            <p className="category-tag">{post.category}</p>
+            <p className="category-tag">{post?.category}</p>
           </div>
 
           <h3 className="text-30-bold">Pitch Details</h3>
