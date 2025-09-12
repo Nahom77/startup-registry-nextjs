@@ -6,12 +6,64 @@ import { Textarea } from "./ui/textarea";
 import MDEditor from "@uiw/react-md-editor";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
+import { formSchema } from "@/lib/validation";
+import { z } from "zod";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const StartupForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState("");
+  const router = useRouter();
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    try {
+      const formValues = {
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        link: formData.get("link") as string,
+        pitch,
+      };
+
+      await formSchema.parseAsync(formValues);
+
+      console.log(formValues);
+
+      // const result = await createDiffieHellman(prevState, formData, pitch)
+
+      // if (result.status === 'SUCCESS') {
+      //   toast("Success", {
+      //     description: "Your startup pitch has been created successfully.",
+      //   });
+      //   router.push(`/startup/${result.id}`)
+      // }
+
+      // return result
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors = error.flatten().fieldErrors;
+
+        setErrors(fieldErrors as unknown as Record<string, string>);
+
+        toast("Error", {
+          description: "Please check your inputs and try again.",
+        });
+
+        return { ...prevState, error: "Validation failed", status: "Error" };
+      }
+
+      toast("Error", {
+        description: "Please check your inputs and try again.",
+      });
+
+      return {
+        ...prevState,
+        error: "An expected error has occured",
+        status: "Error",
+      };
+    }
+  };
 
   const [state, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
@@ -19,7 +71,7 @@ const StartupForm = () => {
   });
 
   return (
-    <form action={() => {}} className="startup-form">
+    <form action={formAction} className="startup-form">
       <div>
         <label htmlFor="title" className="startup-form_label">
           Title
