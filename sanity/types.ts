@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
 // Source: schema.json
 export type Startup = {
   _id: string;
@@ -30,7 +32,7 @@ export type Startup = {
   views?: number;
   description?: string;
   category?: string;
-  image?: string;
+  image: string;
   pitch?: string;
 };
 
@@ -44,7 +46,7 @@ export type Author = {
   name?: string;
   username?: string;
   email?: string;
-  image?: string;
+  image?: string | StaticImport;
   bio?: string;
 };
 
@@ -168,5 +170,19 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Startup | Author | Markdown | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes =
+  | Startup
+  | Author
+  | Markdown
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageHotspot
+  | SanityImageCrop
+  | SanityFileAsset
+  | SanityImageAsset
+  | SanityImageMetadata
+  | Geopoint
+  | Slug
+  | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;

@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { parseServerActionResponse } from "./utils";
+import { parseServerActionResponse } from "@/lib/utils";
 import slugify from "slugify";
 import { writeClient } from "@/sanity/lib/write-client";
 
@@ -15,7 +15,7 @@ export const createPitch = async (
   if (!session)
     return parseServerActionResponse({
       error: "Not signed in",
-      status: "Error",
+      status: "ERROR",
     });
 
   const { title, description, category, link } = Object.fromEntries(
@@ -30,8 +30,14 @@ export const createPitch = async (
       description,
       category,
       image: link,
-      slug: { _type: slug, current: slug },
-      author: { _type: "reference", _ref: session?._id },
+      slug: {
+        _type: slug,
+        current: slug,
+      },
+      author: {
+        _type: "reference",
+        _ref: session?.id,
+      },
       pitch,
     };
 
@@ -47,7 +53,7 @@ export const createPitch = async (
 
     return parseServerActionResponse({
       error: JSON.stringify(error),
-      status: "Error",
+      status: "ERROR",
     });
   }
 };
