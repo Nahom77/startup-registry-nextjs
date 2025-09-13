@@ -13,7 +13,7 @@ Startup registry app for new startups
 ### Links
 
 - Solution URL: [Solution URL](https://github.com/Nahom77/startup-registry-nextjs)
-- Live Site URL: [Live site URL](https://startup-registry-by-nahom2.netlify.app)
+- Live Site URL: [Live site URL](https://startup-registry-by-nahom.netlify.app)
 
 ## My process
 
